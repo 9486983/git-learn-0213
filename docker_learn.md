@@ -251,7 +251,16 @@ root@LAPTOP-71VL09VG:/mnt/d# curl localhost:3101
 > ##### 2.Docker安装tomcat
 
 ```shell
-docker run -it --rm tomcat	#--rm表示容器停止时自动销毁, 常用于测试
-
+docker run -it --rm tomcat	#--rm表示容器停止时自动销毁容器, 常用于测试
+docker run -it --name tomcat_test -p 3102:8080 tomcat	#运行tomcat
+#运行后访问 会报404, 因为当前暂时没有webapps中暂未部署项目
+#我们需要将webapps.dist的内容复制到webapps中
+cp -r webapps.dist/* webapps
+root@2f9841c7c453:/usr/local/tomcat/webapps# ls
+ROOT  docs  examples  host-manager  manager
+#有内容则表示复制成功了
 ```
 
+![image-20220227153305885](C:\Users\zhuoyue\AppData\Roaming\Typora\typora-user-images\image-20220227153305885.png)![image-20220227154025842](C:\Users\zhuoyue\AppData\Roaming\Typora\typora-user-images\image-20220227154025842.png![image-20220227154044033](C:\Users\zhuoyue\AppData\Roaming\Typora\typora-user-images\image-20220227154044033.png)
+
+> ##### 问题: 每次部署项目都需要进入容器, 非常麻烦, 有什么办法可以提高效率呢?
